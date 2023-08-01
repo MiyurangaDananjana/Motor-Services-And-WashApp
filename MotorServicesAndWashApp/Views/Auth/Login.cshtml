@@ -1,0 +1,59 @@
+﻿@model MotorServicesAndWashApp.Models.UserModel
+@{
+    ViewData["Title"] = "Login Page";
+}
+
+<section>
+    <div class="container mt-5 pt-5">
+        <div class="row">
+            <div class="col-12 col-sm-8 col-md-6 m-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-center login-image">
+                            <img src="~/img/3d-user-image.png" alt="Login Image" width="75" height="75" />
+                        </div>
+                        <form method="post" action="User-Login">
+                            @if (TempData["Message"] != null)
+                            {
+                                <div class="alert alert-primary" role="alert">
+                                    @TempData["Message"]
+                                </div>
+                            }
+                           
+                            <div class="form-group">
+                                <label for="username">Email Or Phone Number</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text"><i class="bi bi-person-circle"></i></span>
+                                    <input type="text" class="form-control" asp-for="email">
+                                </div>
+                                <span asp-validation-for="email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text"><i class="bi bi-shield-lock-fill"></i></span>
+                                    <input type="password" class="form-control" asp-for="password">
+                                </div>
+                                <span asp-validation-for="password" class="text-danger"></span>
+                            </div>
+                            <div class="text-center">
+                                <input class="btn btn-primary btn-lg" type="submit" value="Login" />
+                                @if (TempData["ReecoveryLink"] != null)
+                                {
+                                    <a class="nav-link alert-danger" asp-controller="Auth" asp-action="Recovery">Recover Motor Service Password</a>
+                                }
+                                else 
+                                {
+                                    <a class="nav-link" asp-controller="Auth" asp-action="Register">Create account</a>
+                                }
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

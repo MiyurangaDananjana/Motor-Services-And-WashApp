@@ -1,0 +1,45 @@
+﻿section {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.bg-img {
+    border-radius: 10px;
+    background-image: url('img/bg-banner.jpg');
+    height: 500px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 8px;
+}
+
+.header {
+    color: #fff;
+    font-size: 55px;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    margin-top: 2rem;
+}
+
+.btn-tow {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Set the gap to 10px */
+    margin-top: 8rem;
+}
+
+button {
+    width: 100px;
+}
+
+.golden-outline {
+    font-size: 40px;
+    letter-spacing: 10px;
+    color: #01113b;
+    -webkit-text-stroke: 2px #808080;
+    border-right: 2px solid;
+    width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+

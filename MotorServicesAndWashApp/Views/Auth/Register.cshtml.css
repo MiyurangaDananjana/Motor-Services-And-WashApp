@@ -1,0 +1,43 @@
+﻿.outline {
+    margin-top: 1rem;
+}
+
+.form-group {
+    text-align: left;
+}
+
+    .form-group label {
+        margin-bottom: 7px;
+        margin-left: 4px;
+    }
+
+.login-image {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+label {
+    font-family: Roboto,sans-serif;
+    color: #212A3E;
+}
+
+.card {
+    background-color: #F1F6F9;
+}
+
+form {
+    padding: 10px;
+}
+
+.btn {
+    margin: 10px 0px 10px 0px;
+    width: 100px;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-family: Roboto,sans-serif;
+}
+
+.text-center a {
+    cursor: pointer;
+}

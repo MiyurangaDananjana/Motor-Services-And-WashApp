@@ -1,0 +1,27 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+}
+
+body {
+    margin-bottom: 60px;
+    padding: 0;
+    box-sizing: border-box;
+}
+.logo {
+    width: 60px;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+    .logo:hover {
+        transform: scale(1.2);
+    }
