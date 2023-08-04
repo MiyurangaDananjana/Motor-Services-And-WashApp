@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MotorServicesAndWashApp.Data;
 
@@ -11,9 +12,10 @@ using MotorServicesAndWashApp.Data;
 namespace MotorServicesAndWashApp.Migrations
 {
     [DbContext(typeof(MotorServiceDbContext))]
-    partial class MotorServiceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230801133800_change")]
+    partial class change
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

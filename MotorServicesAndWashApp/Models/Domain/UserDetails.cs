@@ -25,5 +25,10 @@ namespace MotorServicesAndWashApp.Models.Domain
         public string? salt { get; set; }
         [StringLength(200)]
         public string? password { get; set; }
+
+        [Range(0, 200)]
+        public short OptCode { get; set; }
+
+        public DateTime OptCodeSendDateTime { get; set; }
     }
 }

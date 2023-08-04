@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.Login
 {
@@ -12,7 +7,7 @@ namespace BLL.Login
     {
         private static readonly Random random = new Random();
         private const string CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        public  string GenerateRandomString(int length)
+        public static  string GenerateRandomString(int length)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -26,7 +21,7 @@ namespace BLL.Login
         }
 
 
-        public  string ComputeSHA256Hash(string input)
+        public static string ComputeSHA256Hash(string input)
         {
             using (SHA256 sha256 = SHA256.Create())
             {
@@ -36,6 +31,12 @@ namespace BLL.Login
             }
         }
 
-
+        public static int OtpCodeGenerator()
+        {
+            int _min = 1000;
+            int _max = 9999;
+            Random _rdm = new Random();
+            return _rdm.Next(_min, _max);
+        }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MotorServicesAndWashApp.Data;
 
@@ -11,9 +12,10 @@ using MotorServicesAndWashApp.Data;
 namespace MotorServicesAndWashApp.Migrations
 {
     [DbContext(typeof(MotorServiceDbContext))]
-    partial class MotorServiceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230801133139_Add")]
+    partial class Add
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,7 +32,7 @@ namespace MotorServicesAndWashApp.Migrations
                     b.Property<string>("CitiesName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("DistrictsId")
+                    b.Property<int>("DistrictsId")
                         .HasColumnType("int");
 
                     b.Property<double>("Latitude")
@@ -59,6 +61,9 @@ namespace MotorServicesAndWashApp.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("Districts_Name");
+
+                    b.Property<int>("ProviceId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("ProvincesId")
                         .HasColumnType("int");
@@ -162,7 +167,9 @@ namespace MotorServicesAndWashApp.Migrations
                 {
                     b.HasOne("MotorServicesAndWashApp.Models.Domain.Districts", "Districts")
                         .WithMany("Cities")
-                        .HasForeignKey("DistrictsId");
+                        .HasForeignKey("DistrictsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Districts");
                 });

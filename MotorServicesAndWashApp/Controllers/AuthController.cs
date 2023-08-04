@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BLL.Login;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MotorServicesAndWashApp.Data;
 using MotorServicesAndWashApp.Models;
 using MotorServicesAndWashApp.Models.Domain;
-using BLL.Login;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+using EmailService;
+using RestSharp;
 
 namespace MotorServicesAndWashApp.Controllers
 {
@@ -24,11 +25,26 @@ namespace MotorServicesAndWashApp.Controllers
         [Route("Register")]
         public IActionResult Register()
         {
+            var provincesList = _DbContext.Provinces
+                                 .Select(p => new ProvincesViewModel
+                                 {
+                                     ProvincesId = p.ProvincesId,
+                                     ProvincesName = p.ProvincesName
+                                 })
+                                 .ToList();
+
+            ViewBag.ProvincesList = provincesList; 
             return View();
+
         }
 
         [Route("Recovery")]
         public IActionResult Recovery()
+        {
+            return View();
+        }
+        [Route("Change-Password")]
+        public IActionResult ChangePassword()
         {
             return View();
         }
@@ -48,9 +64,9 @@ namespace MotorServicesAndWashApp.Controllers
                     }
                     if (userModel.password != null)
                     {
-                        RandomStringGenerator generator = new RandomStringGenerator();
-                        string salt = generator.ComputeSHA256Hash(generator.GenerateRandomString(5));
-                        string modifyPass = generator.ComputeSHA256Hash(userModel.password);
+
+                        string salt = RandomStringGenerator.ComputeSHA256Hash(RandomStringGenerator.GenerateRandomString(5));
+                        string modifyPass = RandomStringGenerator.ComputeSHA256Hash(userModel.password);
                         var userDetails = new UserDetails()
                         {
                             Id = Guid.NewGuid(),
@@ -72,7 +88,6 @@ namespace MotorServicesAndWashApp.Controllers
                     {
                         return BadRequest();
                     }
-
                 }
                 else
                 {
@@ -96,25 +111,49 @@ namespace MotorServicesAndWashApp.Controllers
                 var isUser = await _DbContext.UserDetails.FirstOrDefaultAsync(x => x.email == userModel.email);
                 if (isUser != null)
                 {
-                   
                     if (userModel.password != null)
                     {
-                        RandomStringGenerator generator = new RandomStringGenerator();
                         var userSalt = isUser.salt;
-                        var userPassword = generator.ComputeSHA256Hash(userModel.password);
+                        var userPassword = RandomStringGenerator.ComputeSHA256Hash(userModel.password);
                         var hashPass = userSalt + userPassword;
                         if (isUser.password != hashPass)
                         {
                             TempData["ReecoveryLink"] = "204 : Check the Password.";
                             return RedirectToAction("Login", "Auth");
                         }
-
                         var isLogin = await _DbContext.UserDetails.FirstOrDefaultAsync(x => x.email == userModel.email && x.password == hashPass);
-
                         if (isLogin != null)
                         {
+                            DateTime currentDate = DateTime.Now;
+                            string Key = "MotorService";
+                            string Value = RandomStringGenerator.GenerateRandomString(20);
+                            CookieOptions option = new CookieOptions
+                            {
+                                Expires = DateTime.Now.AddDays(5)
+                            };
 
-                            return Ok("Login Success");
+                            var isSession = await _DbContext.UserSesstions.FirstOrDefaultAsync(x => x.UserId == isLogin.Id.ToString());
+                            if (isSession != null)
+                            {
+                                isSession.Sesston = Value;
+                                await _DbContext.SaveChangesAsync();
+                            }
+                            else
+                            {
+                                UserSesstion sesstion = new UserSesstion
+                                {
+                                    SessionId = Guid.NewGuid(),
+                                    UserId = isLogin.Id.ToString(),
+                                    Sesston = Value,
+                                    SesstonCreateDate = currentDate,
+                                    SesstonEndDate = currentDate.AddDays(5)
+                                };
+                                await _DbContext.UserSesstions.AddAsync(sesstion);
+                                await _DbContext.SaveChangesAsync();
+
+                            }
+                            Response.Cookies.Append(Key, Value, option);
+                            return Ok("Suuxess");
                         }
                         else
                         {
@@ -133,11 +172,9 @@ namespace MotorServicesAndWashApp.Controllers
                     TempData["Message"] = "401 : User not registered.";
                     return RedirectToAction("Login", "Auth");
                 }
-
             }
             catch (Exception)
             {
-
                 TempData["Message"] = "500 : Please try again later or contact support.";
                 return RedirectToAction("Login", "Auth");
             }
@@ -147,9 +184,23 @@ namespace MotorServicesAndWashApp.Controllers
         public async Task<IActionResult> PasswordRecovery(UserModel userModel)
         {
             var isUser = await _DbContext.UserDetails.FirstOrDefaultAsync(x => x.email == userModel.email);
-            if(isUser != null)
+            if (isUser != null)
             {
-                return Ok("OK");
+                if (isUser.email != null)
+                {
+                    int OTPCode = RandomStringGenerator.OtpCodeGenerator();
+                    // Update OTP code and Date and Time 
+                    isUser.OptCode = (short)OTPCode;
+                    isUser.OptCodeSendDateTime = DateTime.Now;
+                    await _DbContext.SaveChangesAsync();
+
+
+                    return RedirectToAction("Recovery", "Auth");
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
             else
             {
@@ -157,5 +208,6 @@ namespace MotorServicesAndWashApp.Controllers
                 return RedirectToAction("Recovery", "Auth");
             }
         }
+        
     }
 }

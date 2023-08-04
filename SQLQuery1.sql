@@ -1,3 +1,1 @@
-﻿SELECT * FROM UserDetails;
-
-DELETE FROM UserDetails
+﻿SELECT * FROM UserDetails

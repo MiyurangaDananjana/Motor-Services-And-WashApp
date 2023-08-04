@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Net;
 using System.Net.Mail;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EmailService
 {
     public class OtpCodeService
     {
-        public static void EmailSend(string Email, string Subject, string Body)
+        public static string EmailSend(string Email, string Subject, string Body)
         {
-            string fromMail = "miyuranga.athugala@gmail.com";
-            string password = "osrifjrflkkpscox";
+            string fromMail = "miyuranga@athugalacredit.com";
+            string password = "Ah(m4Dq3+o3U8U";
 
             MailMessage message = new MailMessage();
             message.From = new MailAddress(fromMail);
@@ -21,13 +16,29 @@ namespace EmailService
             message.To.Add(new MailAddress(Email));
             message.Body = "<html><body>" + Body + "</body></html>";
             message.IsBodyHtml = true;
-            var smtp = new SmtpClient("smtp.gmail.com")
+
+            using (var smtp = new SmtpClient("mail.athugalacredit.com", 465))
             {
-                Port = 587,
-                Credentials = new NetworkCredential(fromMail, password),
-                EnableSsl = true
-            };
-            smtp.Send(message);
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = new NetworkCredential(fromMail, password);
+                smtp.EnableSsl = true;
+
+                try
+                {
+                    smtp.Send(message);
+                    return "Success";
+                }
+                catch (SmtpException smtpEx)
+                {
+                    // Handle SMTP-specific exceptions
+                    return "SMTP Error: " + smtpEx.Message;
+                }
+                catch (Exception ex)
+                {
+                    // Handle other exceptions
+                    return "Error: " + ex.Message;
+                }
+            }
         }
 
     }

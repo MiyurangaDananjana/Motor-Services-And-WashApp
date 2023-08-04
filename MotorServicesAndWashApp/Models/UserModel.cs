@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MotorServicesAndWashApp.Models
 {
-    public class UserModel
+    public class UserModel:UserEmailModel
     {
         [Required(ErrorMessage = "First Name is required.")]
         [RegularExpression(@"^[A-Za-z]+$", ErrorMessage = "First Name should only contain letters.")]

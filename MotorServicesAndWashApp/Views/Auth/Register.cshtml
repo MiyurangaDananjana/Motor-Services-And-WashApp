@@ -1,6 +1,7 @@
 ﻿@model MotorServicesAndWashApp.Models.UserModel
 @{
     ViewData["Title"] = "Register Page";
+    List<ProvincesViewModel> provincesList = ViewBag.ProvincesList; // Assuming you set the data in the ViewBag from the controller
 }
 
 <section class="vh-100 gradient-custom">
@@ -19,28 +20,25 @@
                                 <div class="alert alert-primary" role="alert">
                                     @TempData["Message"]
                                 </div>
-                            }                 
+                            }
                             <div class="row">
                                 <div class="col-md-6 mb-4">
                                     <div class="form-outline">
-
                                         <label class="form-label" for="txtfirstName">First Name</label>
                                         <input type="text" class="form-control" asp-for="firstName" />
                                         <span asp-validation-for="firstName" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-4">
-
                                     <div class="form-outline">
                                         <label class="form-label" for="txtlastName">Last Name</label>
-                                        <input type="text" class="form-control " asp-for="lastName"/>
+                                        <input type="text" class="form-control " asp-for="lastName" />
                                         <span asp-validation-for="lastName" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-4 pb-2">
-
                                     <div class="form-outline">
                                         <label class="form-label" for="txtemailAddress">Email</label>
                                         <input type="email" class="form-control" asp-for="email" />
@@ -48,7 +46,6 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-4 pb-2">
-
                                     <div class="form-outline">
                                         <label class="form-label" for="txtphoneNumber">Phone Number</label>
                                         <input type="tel" class="form-control" asp-for="phoneNumber" />
@@ -56,30 +53,43 @@
                                     </div>
                                 </div>
                             </div>
-                            @* start address*@
                             <div class="row">
                                 <div class="col-md-6 mb-4 pb-2">
-
                                     <div class="form-outline">
-                                        <label class="form-label" for="txtCity">City</label>
-                                        <input type="text" class="form-control" asp-for="city" />
+                                        <label class="form-label" for="txtCity">Provinces</label>
+                                        <select class="form-select" aria-label="Default select example" id="firstDropdown" onchange="loadDistrictsForProvince(this.value)">
+                                            <option selected>Select Provinces...</option>
+                                            @foreach (var province in provincesList)
+                                            {
+                                                <option value="@province.ProvincesId">@province.ProvincesName</option>
+                                            }
+                                        </select>
                                         <span asp-validation-for="city" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-4 pb-2">
-
                                     <div class="form-outline">
-                                        <label class="form-label" for="txtHomeTown">Home Town</label>
-                                        <input type="text" class="form-control" asp-for="homeTown" />
+                                        <label class="form-label" for="txtHomeTown">District</label>
+                                        <select class="form-select" id="secondDropdown">
+                                            <option value="">Select a District...</option>
+                                        </select>
                                         <span asp-validation-for="homeTown" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
-                            @* End address*@
-                            @* Password*@
                             <div class="row">
                                 <div class="col-md-6 mb-4 pb-2">
-
+                                    <div class="form-outline">
+                                        <label class="form-label" for="txtHomeTown">Cities</label>
+                                        <select class="form-select" id="secondDropdown">
+                                            <option value="">Select a Cities...</option>
+                                        </select>
+                                        <span asp-validation-for="homeTown" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-4 pb-2">
                                     <div class="form-outline">
                                         <label class="form-label" for="txtPassword">Password</label>
                                         <input type="password" class="form-control" asp-for="password" />
@@ -87,7 +97,6 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-4 pb-2">
-
                                     <div class="form-outline">
                                         <label class="form-label" for="txtConfirmPassowrd">Confirm Password</label>
                                         <input type="password" class="form-control" asp-for="confirmPassword" />
@@ -99,7 +108,6 @@
                             <div class="mt-4 pt-2">
                                 <input class="btn btn-primary btn-lg" type="submit" value="Submit" />
                             </div>
-
                         </form>
                     </div>
                 </div>
@@ -110,4 +118,22 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        function loadDistrictsForProvince(selectedProvinceId) {
+            $.ajax({
+                type: "GET",
+                url: "/GetDistrict/" + selectedProvinceId,
+                success: function (data) {
+                    $("#secondDropdown").empty();
+                    data.forEach(function (item) {
+                        $("#secondDropdown").append($('<option></option>').val(item.districtsId).text(item.districtsName));
+                    });
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+    </script>
 }
+
