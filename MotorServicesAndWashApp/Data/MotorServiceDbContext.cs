@@ -14,5 +14,6 @@ namespace MotorServicesAndWashApp.Data
         public DbSet<Districts> Districts { get; set; }
         public DbSet<Provinces> Provinces { get; set; }
         public DbSet<Cities> Cities { get; set; }
+        public DbSet<VehicleTypes> VehicleTypes { get; set; }
     }
 }

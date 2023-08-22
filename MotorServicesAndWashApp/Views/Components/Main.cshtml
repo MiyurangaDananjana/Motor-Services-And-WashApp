@@ -1,5 +1,130 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Home";
+    List<VehicleTypeViewModel> vehicleTypeList = ViewBag.vehicleTypeList; 
+    List<ProvincesViewModel> ProvincesList = ViewBag.ProvincesList;
 }
+<section>
+    <div class="container mt-5 pt-5">
+        <div class="row">
+            <!-- First Column: Left Side Section -->
+            <div class="col-12 col-sm-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <!-- Name input -->
+                            <div class="form-outline mb-1">
+                                <div class="row">
+                                    <!--Provinces Selection-->
+                                    <div class="col-md-6 mb-4 pb-2">
+                                        <div class="form-outline">
+                                            <label class="form-label" for="txtCity">Provinces</label>
+                                            <select class="form-select" aria-label="Default select example">
+                                                <option selected>Select Provinces...</option>
+                                                @foreach (var Provinces in ProvincesList)
+                                                {
+                                                    <option value="@Provinces.ProvincesId">@Provinces.ProvincesName</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!--District Selection-->
+                                    <div class="col-md-6 mb-4 pb-2">
+                                        <div class="form-outline">
+                                            <label class="form-label" for="txtHomeTown">District</label>
+                                            <select class="form-select" >
+                                                <option value="">Select a District...</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Email input -->
+                            <div class="form-outline mb-1">
+                                <div class="row">
+                                    <!--Cities Selection-->
+                                    <div class="col-md-6 mb-4 pb-2">
+                                        <div class="form-outline">
+                                            <label class="form-label" for="txtHomeTown">Cities</label>
+                                            <select class="form-select" id="thirdDropdown">
+                                                <option value="">Select a Cities...</option>
+                                            </select>
+                                            <input type="hidden" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4 pb-2">
+                                        <div class="form-outline">
+                                            <label class="form-label" for="txtHomeTown">Date</label>
+                                            <input type="date" class="form-control" id="dateInput" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-outline mb-1">
+                                <div class="row">
+                                    <!--Provinces Selection-->
+                                    <div class="col-md-6 mb-4 pb-2">
+                                        <div class="form-outline">
+                                            <label class="form-label" for="txtCity">Vehicle Type</label>
+                                            <select class="form-select" id="thirdDropdown">
+                                                <option value="">Select a Vehicle Type...</option>
+                                                @foreach (var vehicle in vehicleTypeList)
+                                                {
+                                                    <option value="@vehicle.VehicleTypeId">@vehicle.VehicleTypeName</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Submit button -->
+                            <button type="submit" class="btn btn-primary btn-block mb-4">Send</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Second Column: Right Side Section -->
+            <div class="col-12 col-sm-6 mb-4">
+                <table class="table align-middle mb-2 bg-white">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Name</th>
+                            <th>Title</th>
+                            <th>Status</th>
+                            <th>Position</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="https://mdbootstrap.com/img/new/avatars/6.jpg"
+                                         class="rounded-circle"
+                                         alt=""
+                                         style="width: 45px; height: 45px; margin-left:10px" />
+
+                                </div>
+                            </td>
+                            <td>
+                                <div class="ms-3">
+                                    <p class="fw-bold mb-1">John Doe</p>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="badge badge-pill badge-success">Success</span>
+                            </td>
+                            <td>Senior</td>
+                            <td>
+                                <button type="button" class="btn btn-outline-info btn-rounded" data-mdb-ripple-color="dark">Info</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    const currentDate = new Date().toISOString().split('T')[0];
+    document.getElementById('dateInput').value = currentDate;
+</script>

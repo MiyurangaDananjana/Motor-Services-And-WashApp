@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="DLL\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
@@ -22,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BLL\BLL.csproj" />
     <ProjectReference Include="..\EmailService\EmailService.csproj" />
   </ItemGroup>
 

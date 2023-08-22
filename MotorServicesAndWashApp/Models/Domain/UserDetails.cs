@@ -17,18 +17,16 @@ namespace MotorServicesAndWashApp.Models.Domain
         public string? email { get; set; }
         [Phone]
         public string? phoneNumber { get; set; }
-        [StringLength(100)]
-        public string? city { get; set; }
-        [StringLength(100)]
-        public string? homeTown { get; set; }
         [StringLength(200)]
         public string? salt { get; set; }
         [StringLength(200)]
         public string? password { get; set; }
-
         [Range(0, 200)]
         public short OptCode { get; set; }
 
         public DateTime OptCodeSendDateTime { get; set; }
+
+        [ForeignKey("CitiesId")]
+        public int CitiesId { get; set; }
     }
 }

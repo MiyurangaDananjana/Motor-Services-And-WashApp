@@ -6,6 +6,7 @@ using MotorServicesAndWashApp.Models;
 using MotorServicesAndWashApp.Models.Domain;
 using EmailService;
 using RestSharp;
+using MotorServicesAndWashApp.Selection;
 
 namespace MotorServicesAndWashApp.Controllers
 {
@@ -13,6 +14,9 @@ namespace MotorServicesAndWashApp.Controllers
     public class AuthController : Controller
     {
         private readonly MotorServiceDbContext _DbContext;
+
+        private const string Key = "MotorService";
+
         public AuthController(MotorServiceDbContext motorServiceDbContext)
         {
             this._DbContext = motorServiceDbContext;
@@ -25,17 +29,9 @@ namespace MotorServicesAndWashApp.Controllers
         [Route("Register")]
         public IActionResult Register()
         {
-            var provincesList = _DbContext.Provinces
-                                 .Select(p => new ProvincesViewModel
-                                 {
-                                     ProvincesId = p.ProvincesId,
-                                     ProvincesName = p.ProvincesName
-                                 })
-                                 .ToList();
-
-            ViewBag.ProvincesList = provincesList; 
+            SelectionsBox selections = new SelectionsBox(_DbContext);
+            ViewBag.ProvincesList = selections.GetProvinces();
             return View();
-
         }
 
         [Route("Recovery")]
@@ -49,7 +45,7 @@ namespace MotorServicesAndWashApp.Controllers
             return View();
         }
 
-        [HttpPost("NewUser")]
+        [HttpPost("New-User")]
         public async Task<IActionResult> NewUser(UserModel userModel)
         {
             try
@@ -64,7 +60,6 @@ namespace MotorServicesAndWashApp.Controllers
                     }
                     if (userModel.password != null)
                     {
-
                         string salt = RandomStringGenerator.ComputeSHA256Hash(RandomStringGenerator.GenerateRandomString(5));
                         string modifyPass = RandomStringGenerator.ComputeSHA256Hash(userModel.password);
                         var userDetails = new UserDetails()
@@ -74,8 +69,7 @@ namespace MotorServicesAndWashApp.Controllers
                             lastName = userModel.lastName,
                             email = userModel.email,
                             phoneNumber = userModel.phoneNumber,
-                            city = userModel.city,
-                            homeTown = userModel.homeTown,
+                            CitiesId = userModel.Cities,
                             salt = salt,
                             password = salt + modifyPass
                         };
@@ -121,17 +115,17 @@ namespace MotorServicesAndWashApp.Controllers
                             TempData["ReecoveryLink"] = "204 : Check the Password.";
                             return RedirectToAction("Login", "Auth");
                         }
+
                         var isLogin = await _DbContext.UserDetails.FirstOrDefaultAsync(x => x.email == userModel.email && x.password == hashPass);
                         if (isLogin != null)
                         {
                             DateTime currentDate = DateTime.Now;
-                            string Key = "MotorService";
+
                             string Value = RandomStringGenerator.GenerateRandomString(20);
                             CookieOptions option = new CookieOptions
                             {
                                 Expires = DateTime.Now.AddDays(5)
                             };
-
                             var isSession = await _DbContext.UserSesstions.FirstOrDefaultAsync(x => x.UserId == isLogin.Id.ToString());
                             if (isSession != null)
                             {
@@ -153,7 +147,7 @@ namespace MotorServicesAndWashApp.Controllers
 
                             }
                             Response.Cookies.Append(Key, Value, option);
-                            return Ok("Suuxess");
+                            return RedirectToAction("Main", "Components");
                         }
                         else
                         {
@@ -165,7 +159,6 @@ namespace MotorServicesAndWashApp.Controllers
                     {
                         return BadRequest();
                     }
-
                 }
                 else
                 {
@@ -193,8 +186,6 @@ namespace MotorServicesAndWashApp.Controllers
                     isUser.OptCode = (short)OTPCode;
                     isUser.OptCodeSendDateTime = DateTime.Now;
                     await _DbContext.SaveChangesAsync();
-
-
                     return RedirectToAction("Recovery", "Auth");
                 }
                 else
@@ -208,6 +199,27 @@ namespace MotorServicesAndWashApp.Controllers
                 return RedirectToAction("Recovery", "Auth");
             }
         }
-        
+
+
+        public IActionResult RemoveCookie()
+        {
+            string value = string.Empty;
+            CookieOptions option = new CookieOptions
+            {
+                Expires = DateTime.Now.AddDays(-1)
+            };
+            Response.Cookies.Append(Key, value, option);
+            return RedirectToAction("Login", "Auth");
+        }
+
+        [HttpGet("getSp")]
+        public IActionResult GetSp()
+        {
+            var result = _DbContext.UserDetails.FromSqlRaw("SpUserDetails").ToList();
+            return Ok(result);
+
+            //var result = _DbContext.UserDetails.Select(x => x);
+            //return Ok(result);
+        }
     }
 }

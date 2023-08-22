@@ -24,9 +24,16 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                        <a class="nav-link active" asp-area="" asp-controller="Home" asp-action="Index" >Home</a>
+                        <a class="nav-link active" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="nav-link active" asp-area="" asp-controller="ServiceCenter" asp-action="Register">Service Center Reg</a>
                         <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
                     </div>
+                </div>
+                <div class="navbar-nav">
+                    <a class="nav-link" id="logoutLink" style="display: none; margin-right:1rem;" asp-controller="Auth" asp-action="RemoveCookie">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </a>
                 </div>
             </div>
         </nav>
@@ -36,11 +43,28 @@
             @RenderBody()
         </main>
     </div>
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>
+
+@*check the authentication cookie is true*@
+<script>
+    $(document).ready(function () {
+        function checkCookieExists(cookieName) {
+            return document.cookie.indexOf(cookieName + '=') !== -1;
+        }
+        const cookieName = "MotorService";
+        const cookieExists = checkCookieExists(cookieName);
+        if (cookieExists) {
+            $("#logoutLink").show();
+        } else {
+            $("#logoutLink").hide();
+        }
+    });
+</script>
+

@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+<section>
+    <div class="container mt-5 pt-5">
+        <div class="row">
+            <div class="col-12 col-sm-8 col-md-6 m-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-center login-image">
+                            <img src="~/img/3d-user-image.png" alt="Login Image" width="75" height="75" />
+                        </div>
+
+                        <form>
+                            <!-- Name input -->
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="form4Example1">Name</label>
+                                <input type="text" id="form4Example1" class="form-control" />
+                               
+                            </div>
+
+                            <!-- Email input -->
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="form4Example2">Email address</label>
+                                <input type="email" id="form4Example2" class="form-control" />
+                             
+                            </div>
+
+                            <!-- Message input -->
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="form4Example3">Message</label>
+                                <textarea class="form-control" id="form4Example3" rows="4"></textarea>
+                               
+                            </div>
+
+                            <!-- Checkbox -->
+                            <div class="form-check d-flex justify-content-center mb-4">
+                                <input class="form-check-input me-2" type="checkbox" value="" id="form4Example4" checked />
+                                <label class="form-check-label" for="form4Example4">
+                                    Send me a copy of this message
+                                </label>
+                            </div>
+
+                            <!-- Submit button -->
+                            <button type="submit" class="btn btn-primary btn-block mb-4">Send</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

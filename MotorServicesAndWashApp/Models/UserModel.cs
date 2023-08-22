@@ -21,13 +21,7 @@ namespace MotorServicesAndWashApp.Models
         [RegularExpression(@"^[0-9]+$", ErrorMessage = "Phone Number should only contain numbers.")]
         public string? phoneNumber { get; set; }
 
-        [Required(ErrorMessage = "city is required.")]
-        [RegularExpression(@"^[A-Za-z]+$", ErrorMessage = "First Name should only contain letters.")]
-        public string? city { get; set; }
-
-        [Required(ErrorMessage = "Home Town is required.")]
-        [RegularExpression(@"^[A-Za-z]+$", ErrorMessage = "First Name should only contain letters.")]
-        public string? homeTown { get; set; }
+        public int Cities { get; set; }
 
         [Required(ErrorMessage = "Password is required.")]
         public string? password { get; set; }

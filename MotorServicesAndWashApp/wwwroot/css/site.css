@@ -16,6 +16,7 @@ body {
     margin-bottom: 60px;
     padding: 0;
     box-sizing: border-box;
+   
 }
 .logo {
     width: 60px;
@@ -25,3 +26,7 @@ body {
     .logo:hover {
         transform: scale(1.2);
     }
+.card {
+    background-color: #F1F6F9;
+}
+

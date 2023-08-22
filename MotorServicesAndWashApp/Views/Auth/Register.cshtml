@@ -3,12 +3,11 @@
     ViewData["Title"] = "Register Page";
     List<ProvincesViewModel> provincesList = ViewBag.ProvincesList; // Assuming you set the data in the ViewBag from the controller
 }
-
 <section class="vh-100 gradient-custom">
     <div class="container py-5 h-100">
         <div class="row justify-content-center align-items-center h-100">
             <div class="col-12 col-lg-9 col-xl-7">
-                <div class="card shadow-2-strong card-registration" style="border-radius: 10px;">
+                <div class="card shadow-2-strong card-registration" style="border-radius: 10px;  margin-bottom: 3rem;">
                     <div class="card-body p-4 p-md-5">
                         <div class="text-center login-image">
                             <img src="~/img/34626839_8204639.png" alt="Login Image" width="80" height="75" />
@@ -22,6 +21,7 @@
                                 </div>
                             }
                             <div class="row">
+                                <!--First Name Input-->
                                 <div class="col-md-6 mb-4">
                                     <div class="form-outline">
                                         <label class="form-label" for="txtfirstName">First Name</label>
@@ -29,6 +29,7 @@
                                         <span asp-validation-for="firstName" class="text-danger"></span>
                                     </div>
                                 </div>
+                                <!--Last Name Input-->
                                 <div class="col-md-6 mb-4">
                                     <div class="form-outline">
                                         <label class="form-label" for="txtlastName">Last Name</label>
@@ -38,6 +39,7 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <!--Email Input-->
                                 <div class="col-md-6 mb-4 pb-2">
                                     <div class="form-outline">
                                         <label class="form-label" for="txtemailAddress">Email</label>
@@ -45,6 +47,7 @@
                                         <span asp-validation-for="email" class="text-danger"></span>
                                     </div>
                                 </div>
+                                <!--Phone number input-->
                                 <div class="col-md-6 mb-4 pb-2">
                                     <div class="form-outline">
                                         <label class="form-label" for="txtphoneNumber">Phone Number</label>
@@ -54,6 +57,7 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <!--Provinces Selection-->
                                 <div class="col-md-6 mb-4 pb-2">
                                     <div class="form-outline">
                                         <label class="form-label" for="txtCity">Provinces</label>
@@ -64,30 +68,33 @@
                                                 <option value="@province.ProvincesId">@province.ProvincesName</option>
                                             }
                                         </select>
-                                        <span asp-validation-for="city" class="text-danger"></span>
+                                       
                                     </div>
                                 </div>
+                                <!--District Selection-->
                                 <div class="col-md-6 mb-4 pb-2">
                                     <div class="form-outline">
                                         <label class="form-label" for="txtHomeTown">District</label>
-                                        <select class="form-select" id="secondDropdown">
+                                        <select class="form-select" id="secondDropdown" onchange="loadCitiesForDistrict(this.value)">
                                             <option value="">Select a District...</option>
                                         </select>
-                                        <span asp-validation-for="homeTown" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
+                                <!--Cities Selection-->
                                 <div class="col-md-6 mb-4 pb-2">
                                     <div class="form-outline">
                                         <label class="form-label" for="txtHomeTown">Cities</label>
-                                        <select class="form-select" id="secondDropdown">
+                                        <select class="form-select" id="thirdDropdown" onchange="loadCities(this.value)">
                                             <option value="">Select a Cities...</option>
                                         </select>
-                                        <span asp-validation-for="homeTown" class="text-danger"></span>
+                                        <input type="hidden" id="selectedCityId" asp-for="Cities" />
                                     </div>
                                 </div>
                             </div>
+
+                            <!--Password-->
                             <div class="row">
                                 <div class="col-md-6 mb-4 pb-2">
                                     <div class="form-outline">
@@ -119,21 +126,6 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
-        function loadDistrictsForProvince(selectedProvinceId) {
-            $.ajax({
-                type: "GET",
-                url: "/GetDistrict/" + selectedProvinceId,
-                success: function (data) {
-                    $("#secondDropdown").empty();
-                    data.forEach(function (item) {
-                        $("#secondDropdown").append($('<option></option>').val(item.districtsId).text(item.districtsName));
-                    });
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-        }
     </script>
 }
 

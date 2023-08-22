@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MotorServicesAndWashApp.Data;
 using MotorServicesAndWashApp.Models;
 using MotorServicesAndWashApp.Models.Domain;
+using MotorServicesAndWashApp.Selection;
 
 namespace MotorServicesAndWashApp.Controllers
 {
@@ -17,6 +19,9 @@ namespace MotorServicesAndWashApp.Controllers
 
         public IActionResult Main()
         {
+            SelectionsBox selections = new SelectionsBox(_DbContext);
+            ViewBag.vehicleTypeList = selections.GetVehicleTypes();
+            ViewBag.ProvincesList = selections.GetProvinces();
             return View();
         }
 

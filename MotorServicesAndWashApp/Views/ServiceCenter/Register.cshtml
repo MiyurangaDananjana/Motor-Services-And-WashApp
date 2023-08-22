@@ -1,0 +1,316 @@
+﻿@model MotorServicesAndWashApp.Models.UserModel
+@{
+    ViewData["Title"] = "Register ";
+    List<ProvincesViewModel> provincesList = ViewBag.ProvincesList;
+}
+<section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-12 col-lg-9 col-xl-7">
+                <div class="card shadow-2-strong card-registration" style="border-radius: 10px;  margin-bottom: 3rem;">
+                    <div class="card-body p-4 p-md-5">
+                        <form id="regForm" action="">
+                            <div class="tab">
+                                <h5 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">Address</h5>
+                                <!--Provinces Selection-->
+                                <div class="form-outline">
+                                    <label class="form-label" for="txtemailAddress">Provinces</label>
+                                    <select class="form-select" id="firstDropdown" onchange="loadDistrictsForProvince(this.value)">
+                                        <option value="">Select a Provinces...</option>
+                                        @foreach (var province in provincesList)
+                                        {
+                                            <option value="@province.ProvincesId">@province.ProvincesName</option>
+                                        }
+                                    </select>
+                                </div>
+                                <!--District Selection-->
+                                <div class="form-outline">
+                                    <label class="form-label" for="txtemailAddress">District</label>
+                                    <select class="form-select" id="secondDropdown" onchange="loadCitiesForDistrict(this.value)">
+                                        <option value="">Select a District...</option>
+                                    </select>
+                                    <input type="hidden" id="InputDistrictId" />
+                                </div>
+                                <!--City Selection-->
+                                <div class="form-outline">
+                                    <label class="form-label" for="txtemailAddress">City</label>
+                                    <select class="form-select" id="thirdDropdown" onchange="loadCities(this.value)">
+                                        <option value="">Select a City...</option>
+                                    </select>
+                                    <input type="hidden" id="InputCityId" />
+                                </div>
+                                <!--Address InputBox-->
+                                <div class="form-outline">
+                                    <label class="form-label" for="txtemailAddress">Address</label>
+                                    <textarea class="form-control" rows="3"></textarea>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-2 pb-2">
+                                        <!--Latitude InoutBox-->
+                                        <div class="form-outline">
+                                            <div class="label-container">
+                                                <label class="form-label" for="txtCity">Latitude</label>
+                                                <a style="cursor:pointer;" data-bs-toggle="tooltip" data-bs-placement="top" title="Open Google map and Select Location and get the Latitude and Longitude">
+                                                    <i class="bi bi-info-circle"></i>
+                                                </a>
+                                            </div>
+                                            <input type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4 pb-2">
+                                        <!--Latitude InoutBox-->
+                                        <div class="form-outline">
+                                            <label class="form-label" for="txtHomeTown">Longitude</label>
+                                            <input type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab">
+                                <h5 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">Naming</h5>
+                                <!--Service Center Input-->
+                                <div class="form-outline">
+                                    <label class="form-label" for="txtemailAddress">Service Center Name</label>
+                                    <input type="text" class="form-control" />
+                                    <span class="text-danger"></span>
+                                </div>
+                                <!--PhoneNumber Input-->
+                                <div class="form-outline">
+                                    <label class="form-label" for="txtemailAddress">Phone Number</label>
+                                    <input type="text" class="form-control" />
+                                    <span class="text-danger"></span>
+                                </div>
+                                <!--Hotline number Input-->
+                                <div class="form-outline">
+                                    <label class="form-label" for="txtemailAddress">Hotline</label>
+                                    <input type="text" class="form-control" />
+                                    <span class="text-danger"></span>
+                                </div>
+                                <!--Email Input-->
+                                <div class="form-outline">
+                                    <label class="form-label" for="txtemailAddress">Email</label>
+                                    <input type="email" class="form-control" />
+                                    <span class="text-danger"></span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-2 pb-2">
+                                        <!--Open Time Selection-->
+                                        <div class="form-outline">
+                                            <div class="label-container">
+                                                <label class="form-label" for="txtCity">Open Time</label>
+                                            </div>
+                                            <input type="time" id="txtOpenTime" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <!--Close Time Selection-->
+                                    <div class="col-md-6 mb-2 pb-2">
+                                        <div class="form-outline">
+                                            <label class="form-label" for="txtHomeTown">Close Time</label>
+                                            <input type="time" id="txtCloseTime" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Description Input-->
+                                <div class="form-outline">
+                                    <label class="form-label" for="txtemailAddress">Description</label>
+                                    <textarea class="form-control" rows="3"></textarea>
+                                </div>
+                                <!--Google Map Link Input -->
+                                <div class="form-outline">
+                                    <label class="form-label" for="txtemailAddress">Google Map Link</label>
+                                    <textarea class="form-control" rows="2"></textarea>
+                                </div>
+                            </div>
+                            <div class="tab">
+                                <h5 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">System Login Information</h5>
+                                <!--Admin PhoneNumber input-->
+                                <div class="form-outline">
+                                    <label class="form-label" for="txtemailAddress">Phone Number</label>
+                                    <input type="number" class="form-control" />
+                                    <span class="text-danger"></span>
+                                </div>
+                                <!--Admin Email Address-->
+                                <div class="form-outline">
+                                    <label class="form-label" for="txtemailAddress">Email</label>
+                                    <input type="email" class="form-control" />
+                                    <span class="text-danger"></span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4 pb-2">
+                                        <!--System Login Password-->
+                                        <div class="form-outline">
+                                            <div class="label-container">
+                                                <label class="form-label" for="txtCity">Password</label>
+                                                <a style="cursor:pointer;">
+                                                    <i class="bi bi-info-circle"></i>
+                                                </a>
+                                            </div>
+                                            <input type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4 pb-2">
+                                        <div class="form-outline">
+                                            <label class="form-label" for="txtHomeTown">Confirm Password</label>
+                                            <input type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab">
+                                <div class="form-outline" style="margin-bottom:3rem;">
+                                    <h5 class="mb-2 pb-2 pb-md-0 mb-md-2 text-center">Types of vehicale</h5>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="vehicaleCheckBox1" value="1">
+                                        <label class="form-check-label" for="vehicaleCheckBox1">Car</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="vehicaleCheckBox2" value="2">
+                                        <label class="form-check-label" for="vehicaleCheckBox2">Truck</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="vehicaleCheckBox3" value="3">
+                                        <label class="form-check-label" for="vehicaleCheckBox3">Motorcycle</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="vehicaleCheckBox4" value="4">
+                                        <label class="form-check-label" for="vehicaleCheckBox4">Bus</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="vehicaleCheckBox5" value="5">
+                                        <label class="form-check-label" for="vehicaleCheckBox5">Van</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="vehicaleCheckBox6" value="6">
+                                        <label class="form-check-label" for="vehicaleCheckBox6">SUV</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="vehicaleCheckBox7" value="7">
+                                        <label class="form-check-label" for="vehicaleCheckBox7">Crossover</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="vehicaleCheckBox8" value="8">
+                                        <label class="form-check-label" for="vehicaleCheckBox8">Minivan</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="vehicaleCheckBox9" value="9">
+                                        <label class="form-check-label" for="vehicaleCheckBox9">Commercial Vehicle</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="vehicaleCheckBox10" value="10">
+                                        <label class="form-check-label" for="vehicaleCheckBox10">RV</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="vehicaleCheckBox11" value="11">
+                                        <label class="form-check-label" for="vehicaleCheckBox11">Electric Scooter</label>
+                                    </div>
+                                </div>
+                                <div class="form-outline" style="margin-top:3rem; margin-bottom:3rem;">
+                                    <h5 class="mb-2 pb-2 pb-md-0 mb-md-2 text-center">Days the service center is closed</h5>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="DateCheckbox1" value="1">
+                                        <label class="form-check-label" for="DateCheckbox1">Monday</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="DateCheckbox2" value="2">
+                                        <label class="form-check-label" for="DateCheckbox2">Tuesday</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="DateCheckbox3" value="3">
+                                        <label class="form-check-label" for="DateCheckbox3">Wednesday</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="DateCheckbox4" value="4">
+                                        <label class="form-check-label" for="DateCheckbox4">Thursday</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="DateCheckbox5" value="5">
+                                        <label class="form-check-label" for="DateCheckbox5">Friday</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="DateCheckbox6" value="6">
+                                        <label class="form-check-label" for="DateCheckbox6">Saturday</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="DateCheckbox7" value="7">
+                                        <label class="form-check-label" for="DateCheckbox7">Sunday</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="overflow:auto; ">
+                                <div style="float:right;">
+                                    <button type="button" class="btn btn-primary" id="prevBtn" onclick="nextPrev(-1)">Primary</button>
+                                    <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextPrev(1)">Next</button>
+                                </div>
+                            </div>
+                            <!-- Circles which indicates the steps of the form: -->
+                            <div style="text-align:center;margin-top:40px;">
+                                <span class="step"></span>
+                                <span class="step"></span>
+                                <span class="step"></span>
+                                <span class="step"></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        var currentTab = 0;
+        showTab(currentTab);
+        function showTab(n) {
+            var x = document.getElementsByClassName("tab");
+            x[n].style.display = "block";
+            if (n == 0) {
+                document.getElementById("prevBtn").style.display = "none";
+            } else {
+                document.getElementById("prevBtn").style.display = "inline";
+            }
+            if (n == (x.length - 1)) {
+                document.getElementById("nextBtn").innerHTML = "Submit";
+            } else {
+                document.getElementById("nextBtn").innerHTML = "Next";
+            }
+            fixStepIndicator(n)
+        }
+        function nextPrev(n) {
+            var x = document.getElementsByClassName("tab");
+            if (n == 1 && !validateForm()) return false;
+            x[currentTab].style.display = "none";
+            currentTab = currentTab + n;
+            if (currentTab >= x.length) {
+                document.getElementById("regForm").submit();
+                return false;
+            }
+            showTab(currentTab);
+        }
+        function validateForm() {
+            var x, y, i, valid = true;
+            x = document.getElementsByClassName("tab");
+            y = x[currentTab].getElementsByTagName("input");
+            for (i = 0; i < y.length; i++) {
+                if (y[i].value == "") {
+                    y[i].className += " invalid";
+                    valid = false;
+                }
+            }
+            if (valid) {
+                document.getElementsByClassName("step")[currentTab].className += " finish";
+            }
+            return valid;
+        }
+        function fixStepIndicator(n) {
+            var i, x = document.getElementsByClassName("step");
+            for (i = 0; i < x.length; i++) {
+                x[i].className = x[i].className.replace(" active", "");
+            }
+            x[n].className += " active";
+        }
+    </script>
+
+}
+
