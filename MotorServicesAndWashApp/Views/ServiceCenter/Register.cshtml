@@ -2,6 +2,8 @@
 @{
     ViewData["Title"] = "Register ";
     List<ProvincesViewModel> provincesList = ViewBag.ProvincesList;
+    List<VehicleTypeViewModel> vehicaleTypeList = ViewBag.VehicalTypeList;
+    List<DayOfWeekViewModel> dayOfWeeksList = ViewBag.DayOfWeeksList;
 }
 <section class="vh-100 gradient-custom">
     <div class="container py-5 h-100">
@@ -29,7 +31,7 @@
                                     <select class="form-select" id="secondDropdown" onchange="loadCitiesForDistrict(this.value)">
                                         <option value="">Select a District...</option>
                                     </select>
-                                    <input type="hidden" id="InputDistrictId" />
+                                    <input type="text" id="InputDistrictId" />
                                 </div>
                                 <!--City Selection-->
                                 <div class="form-outline">
@@ -37,7 +39,7 @@
                                     <select class="form-select" id="thirdDropdown" onchange="loadCities(this.value)">
                                         <option value="">Select a City...</option>
                                     </select>
-                                    <input type="hidden" id="InputCityId" />
+                                    <input type="text" id="selectedCityId" />
                                 </div>
                                 <!--Address InputBox-->
                                 <div class="form-outline">
@@ -160,81 +162,25 @@
                             <div class="tab">
                                 <div class="form-outline" style="margin-bottom:3rem;">
                                     <h5 class="mb-2 pb-2 pb-md-0 mb-md-2 text-center">Types of vehicale</h5>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="vehicaleCheckBox1" value="1">
-                                        <label class="form-check-label" for="vehicaleCheckBox1">Car</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="vehicaleCheckBox2" value="2">
-                                        <label class="form-check-label" for="vehicaleCheckBox2">Truck</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="vehicaleCheckBox3" value="3">
-                                        <label class="form-check-label" for="vehicaleCheckBox3">Motorcycle</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="vehicaleCheckBox4" value="4">
-                                        <label class="form-check-label" for="vehicaleCheckBox4">Bus</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="vehicaleCheckBox5" value="5">
-                                        <label class="form-check-label" for="vehicaleCheckBox5">Van</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="vehicaleCheckBox6" value="6">
-                                        <label class="form-check-label" for="vehicaleCheckBox6">SUV</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="vehicaleCheckBox7" value="7">
-                                        <label class="form-check-label" for="vehicaleCheckBox7">Crossover</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="vehicaleCheckBox8" value="8">
-                                        <label class="form-check-label" for="vehicaleCheckBox8">Minivan</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="vehicaleCheckBox9" value="9">
-                                        <label class="form-check-label" for="vehicaleCheckBox9">Commercial Vehicle</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="vehicaleCheckBox10" value="10">
-                                        <label class="form-check-label" for="vehicaleCheckBox10">RV</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="vehicaleCheckBox11" value="11">
-                                        <label class="form-check-label" for="vehicaleCheckBox11">Electric Scooter</label>
-                                    </div>
+                                    @foreach (var vehicalType in vehicaleTypeList)
+                                    {
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="vehicaleCheckBox1" value="@vehicalType.VehicleTypeId">
+                                            <label class="form-check-label" for="vehicaleCheckBox1">@vehicalType.VehicleTypeName</label>
+                                        </div>
+                                    }
                                 </div>
                                 <div class="form-outline" style="margin-top:3rem; margin-bottom:3rem;">
+
                                     <h5 class="mb-2 pb-2 pb-md-0 mb-md-2 text-center">Days the service center is closed</h5>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="DateCheckbox1" value="1">
-                                        <label class="form-check-label" for="DateCheckbox1">Monday</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="DateCheckbox2" value="2">
-                                        <label class="form-check-label" for="DateCheckbox2">Tuesday</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="DateCheckbox3" value="3">
-                                        <label class="form-check-label" for="DateCheckbox3">Wednesday</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="DateCheckbox4" value="4">
-                                        <label class="form-check-label" for="DateCheckbox4">Thursday</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="DateCheckbox5" value="5">
-                                        <label class="form-check-label" for="DateCheckbox5">Friday</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="DateCheckbox6" value="6">
-                                        <label class="form-check-label" for="DateCheckbox6">Saturday</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="DateCheckbox7" value="7">
-                                        <label class="form-check-label" for="DateCheckbox7">Sunday</label>
-                                    </div>
+
+                                    @foreach (var dayOfWeeks in dayOfWeeksList)
+                                    {
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="DateCheckbox1" value="@dayOfWeeks.DayOfWeekId">
+                                            <label class="form-check-label" for="DateCheckbox1">@dayOfWeeks.DayOfWeekName</label>
+                                        </div>
+                                    }                                
                                 </div>
                             </div>
                             <div style="overflow:auto; ">

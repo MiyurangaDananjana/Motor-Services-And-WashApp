@@ -15,5 +15,10 @@ namespace MotorServicesAndWashApp.Data
         public DbSet<Provinces> Provinces { get; set; }
         public DbSet<Cities> Cities { get; set; }
         public DbSet<VehicleTypes> VehicleTypes { get; set; }
+        public DbSet<DayOfWeeksModel> DayOfWeeks { get; set; }
+        public DbSet<DaysOfCloseModel> DaysOfClose { get; set; }
+        public DbSet<ServiceCenter> ServiceCenter { get; set; }
+        public DbSet<ServiceCenterLoginModel> ServiceCenterLogins { get; set; }
+        public DbSet<ServiceVehicles> ServiceVehicles { get; set; }
     }
 }

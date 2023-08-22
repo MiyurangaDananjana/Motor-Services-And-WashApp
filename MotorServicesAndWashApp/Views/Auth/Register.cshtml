@@ -89,17 +89,16 @@
                                         <select class="form-select" id="thirdDropdown" onchange="loadCities(this.value)">
                                             <option value="">Select a Cities...</option>
                                         </select>
-                                        <input type="hidden" id="selectedCityId" asp-for="Cities" />
+                                        <input type="hidden" id="selectedCityId" asp-for="Cities"/>
                                     </div>
                                 </div>
                             </div>
-
                             <!--Password-->
                             <div class="row">
                                 <div class="col-md-6 mb-4 pb-2">
                                     <div class="form-outline">
                                         <label class="form-label" for="txtPassword">Password</label>
-                                        <input type="password" class="form-control" asp-for="password" />
+                                        <input type="password" class="form-control" asp-for="password"/>
                                         <span asp-validation-for="password" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -126,6 +125,8 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
+      
     </script>
+
 }
 

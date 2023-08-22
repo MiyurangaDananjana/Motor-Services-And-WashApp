@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MotorServicesAndWashApp.BLL;
 using MotorServicesAndWashApp.Data;
-using MotorServicesAndWashApp.Selection;
 
 namespace MotorServicesAndWashApp.Controllers
 {
@@ -18,6 +18,8 @@ namespace MotorServicesAndWashApp.Controllers
         {
             SelectionsBox selections = new SelectionsBox(_DbContext);
             ViewBag.ProvincesList = selections.GetProvinces();
+            ViewBag.VehicalTypeList = selections.GetVehicleTypes();
+            ViewBag.DayOfWeeksList = selections.GetDayOfWeeks();
             return View();
           
         }

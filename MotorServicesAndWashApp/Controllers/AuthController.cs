@@ -6,7 +6,7 @@ using MotorServicesAndWashApp.Models;
 using MotorServicesAndWashApp.Models.Domain;
 using EmailService;
 using RestSharp;
-using MotorServicesAndWashApp.Selection;
+using MotorServicesAndWashApp.BLL;
 
 namespace MotorServicesAndWashApp.Controllers
 {
@@ -144,7 +144,6 @@ namespace MotorServicesAndWashApp.Controllers
                                 };
                                 await _DbContext.UserSesstions.AddAsync(sesstion);
                                 await _DbContext.SaveChangesAsync();
-
                             }
                             Response.Cookies.Append(Key, Value, option);
                             return RedirectToAction("Main", "Components");
@@ -217,9 +216,6 @@ namespace MotorServicesAndWashApp.Controllers
         {
             var result = _DbContext.UserDetails.FromSqlRaw("SpUserDetails").ToList();
             return Ok(result);
-
-            //var result = _DbContext.UserDetails.Select(x => x);
-            //return Ok(result);
         }
     }
 }

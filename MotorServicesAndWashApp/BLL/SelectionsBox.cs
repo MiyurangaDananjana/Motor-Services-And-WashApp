@@ -2,7 +2,7 @@
 using MotorServicesAndWashApp.Data;
 using MotorServicesAndWashApp.Models;
 
-namespace MotorServicesAndWashApp.Selection
+namespace MotorServicesAndWashApp.BLL
 {
     public class SelectionsBox
     {
@@ -10,7 +10,7 @@ namespace MotorServicesAndWashApp.Selection
 
         public SelectionsBox(MotorServiceDbContext motorServiceDbContext)
         {
-            this._DbContext = motorServiceDbContext;
+            _DbContext = motorServiceDbContext;
         }
 
         public List<VehicleTypeViewModel> GetVehicleTypes()
@@ -26,6 +26,18 @@ namespace MotorServicesAndWashApp.Selection
             return vehicleTypeList;
         }
 
+        public List<DayOfWeekViewModel> GetDayOfWeeks()
+        {
+            var dayOfWeekList = _DbContext.DayOfWeeks
+                .Select(x => new DayOfWeekViewModel
+                {
+                    DayOfWeekId = x.Id,
+                    DayOfWeekName = x.CalendarDays
+                }).ToList();
+
+            return dayOfWeekList;
+        }
+
         public List<ProvincesViewModel> GetProvinces()
         {
             var provincesList = _DbContext.Provinces
@@ -37,6 +49,8 @@ namespace MotorServicesAndWashApp.Selection
                                 .ToList();
             return provincesList;
         }
+
+
 
     }
 }

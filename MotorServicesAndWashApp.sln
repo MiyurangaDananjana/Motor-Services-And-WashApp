@@ -5,9 +5,7 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotorServicesAndWashApp", "MotorServicesAndWashApp\MotorServicesAndWashApp.csproj", "{DE4476DB-6316-4AE6-ACB3-ACF266BAF171}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{8E4346F5-364D-4507-9677-71E9CCAD2D55}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailService", "EmailService\EmailService.csproj", "{9E9F2F8A-4D73-4E6C-A41C-161A24DA7EC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailService", "EmailService\EmailService.csproj", "{9E9F2F8A-4D73-4E6C-A41C-161A24DA7EC8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +17,6 @@ Global
 		{DE4476DB-6316-4AE6-ACB3-ACF266BAF171}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE4476DB-6316-4AE6-ACB3-ACF266BAF171}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE4476DB-6316-4AE6-ACB3-ACF266BAF171}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8E4346F5-364D-4507-9677-71E9CCAD2D55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8E4346F5-364D-4507-9677-71E9CCAD2D55}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8E4346F5-364D-4507-9677-71E9CCAD2D55}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8E4346F5-364D-4507-9677-71E9CCAD2D55}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9E9F2F8A-4D73-4E6C-A41C-161A24DA7EC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9E9F2F8A-4D73-4E6C-A41C-161A24DA7EC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E9F2F8A-4D73-4E6C-A41C-161A24DA7EC8}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -43,6 +43,7 @@ $("#secondDropdown").change(function () {
 
 function loadCities(Id) {
     saveSelectedCity($("#thirdDropdown").val());
+
 }
 
 function setDistricIdToInput(DistrictId) {
@@ -50,6 +51,6 @@ function setDistricIdToInput(DistrictId) {
 }
 
 function saveSelectedCity(cityId) {
-    $("#InputCityId").val(cityId);
+    $("#selectedCityId").val(cityId);
 }
 
